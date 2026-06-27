@@ -8,23 +8,23 @@
 
         <h1 class="text-3xl font-bold text-slate-800">
 
-            Manajemen User
+            Data Program Studi
 
         </h1>
 
         <p class="text-gray-500 mt-1">
 
-            Kelola seluruh akun Admin, Dosen, dan Mahasiswa.
+            Kelola seluruh data Program Studi.
 
         </p>
 
     </div>
 
     <a
-        href="{{ route('admin.users.create') }}"
-        class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-lg shadow transition">
+        href="{{ route('admin.program-studi.create') }}"
+        class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-lg shadow">
 
-        + Tambah User
+        + Tambah Program Studi
 
     </a>
 
@@ -53,12 +53,10 @@
                     type="text"
                     name="search"
                     value="{{ request('search') }}"
-                    placeholder="Cari username, nama, email..."
-
-                    class="w-full border rounded-lg px-4 py-3 focus:ring focus:ring-indigo-200">
+                    placeholder="Cari kode atau nama program studi..."
+                    class="w-full border rounded-lg px-4 py-3">
 
                 <button
-
                     class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 rounded-lg">
 
                     Cari
@@ -77,35 +75,29 @@
 
             <thead>
 
-                <tr class="bg-slate-100 text-left">
+                <tr class="bg-slate-100">
 
-                    <th class="px-6 py-4">
+                    <th class="px-6 py-4 text-left">
 
                         No
 
                     </th>
 
-                    <th class="px-6 py-4">
+                    <th class="px-6 py-4 text-left">
 
-                        Username
-
-                    </th>
-
-                    <th class="px-6 py-4">
-
-                        Nama
+                        Kode
 
                     </th>
 
-                    <th class="px-6 py-4">
+                    <th class="px-6 py-4 text-left">
 
-                        Email
+                        Program Studi
 
                     </th>
 
-                    <th class="px-6 py-4">
+                    <th class="px-6 py-4 text-left">
 
-                        Role
+                        Fakultas
 
                     </th>
 
@@ -121,64 +113,31 @@
 
             <tbody>
 
-                @forelse($users as $user)
+                @forelse($programStudi as $item)
 
                 <tr class="border-b hover:bg-slate-50">
 
                     <td class="px-6 py-4">
 
-                        {{ $loop->iteration + ($users->currentPage()-1) * $users->perPage() }}
+                        {{ $loop->iteration + ($programStudi->currentPage()-1) * $programStudi->perPage() }}
 
                     </td>
 
                     <td class="px-6 py-4 font-semibold">
 
-                        {{ $user->username }}
+                        {{ $item->kode_prodi }}
 
                     </td>
 
                     <td class="px-6 py-4">
 
-                        {{ $user->name }}
+                        {{ $item->nama_prodi }}
 
                     </td>
 
                     <td class="px-6 py-4">
 
-                        {{ $user->email }}
-
-                    </td>
-
-                    <td class="px-6 py-4">
-
-                        @if($user->role=='admin')
-
-                        <span
-                            class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm">
-
-                            Admin
-
-                        </span>
-
-                        @elseif($user->role=='dosen')
-
-                        <span
-                            class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm">
-
-                            Dosen
-
-                        </span>
-
-                        @else
-
-                        <span
-                            class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-
-                            Mahasiswa
-
-                        </span>
-
-                        @endif
+                        {{ $item->fakultas->nama_fakultas ?? '-' }}
 
                     </td>
 
@@ -187,29 +146,22 @@
                         <div class="flex justify-center gap-2">
 
                             <a
-
-                                href="{{ route('admin.users.edit',$user) }}"
-
-                                class="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                                href="{{ route('admin.program-studi.edit',$item) }}"
+                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">
 
                                 Edit
 
                             </a>
 
                             <form
-
-                                action="{{ route('admin.users.destroy',$user) }}"
-
+                                action="{{ route('admin.program-studi.destroy',$item) }}"
                                 method="POST">
 
                                 @csrf
-
                                 @method('DELETE')
 
                                 <button
-
-                                    onclick="return confirm('Yakin ingin menghapus user ini?')"
-
+                                    onclick="return confirm('Yakin ingin menghapus data ini?')"
                                     class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">
 
                                     Hapus
@@ -228,8 +180,8 @@
                 <tr>
 
                     <td
-                        colspan="6"
-                        class="text-center py-12">
+                        colspan="5"
+                        class="py-12 text-center">
 
                         <div class="flex flex-col items-center">
 
@@ -243,29 +195,27 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="1.5"
-                                    d="M9 17v-2a4 4 0 014-4h5m-5-4V5m0 2h-5a2 2 0 00-2 2v8a2 2 0 002 2h5"/>
+                                    d="M9 17v-2a4 4 0 014-4h5m-5-4V5m0 2H8a2 2 0 00-2 2v8a2 2 0 002 2h5"/>
 
                             </svg>
 
                             <h2 class="text-xl font-semibold text-slate-600">
 
-                                Belum ada data user
+                                Belum Ada Data Program Studi
 
                             </h2>
 
                             <p class="text-gray-400 mt-2">
 
-                                Silahkan tambahkan user baru.
+                                Silahkan tambahkan Program Studi terlebih dahulu.
 
                             </p>
 
                             <a
-
-                                href="{{ route('admin.users.create') }}"
-
+                                href="{{ route('admin.program-studi.create') }}"
                                 class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-lg">
 
-                                + Tambah User
+                                + Tambah Program Studi
 
                             </a>
 
@@ -283,28 +233,27 @@
 
     </div>
 
-    <div
-        class="px-6 py-4 border-t flex justify-between items-center">
+    <div class="border-t px-6 py-4 flex justify-between items-center">
 
         <div class="text-sm text-gray-500">
 
             Menampilkan
 
-            {{ $users->firstItem() ?? 0 }}
+            {{ $programStudi->firstItem() ?? 0 }}
 
             -
 
-            {{ $users->lastItem() ?? 0 }}
+            {{ $programStudi->lastItem() ?? 0 }}
 
             dari
 
-            {{ $users->total() }}
+            {{ $programStudi->total() }}
 
             data
 
         </div>
 
-        {{ $users->links() }}
+        {{ $programStudi->links() }}
 
     </div>
 

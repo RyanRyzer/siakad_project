@@ -4,26 +4,26 @@
 
 <div class="max-w-3xl mx-auto">
 
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex justify-between items-center mb-8">
 
         <div>
 
             <h1 class="text-3xl font-bold text-slate-800">
 
-                Tambah User
+                Edit Program Studi
 
             </h1>
 
             <p class="text-gray-500 mt-1">
 
-                Tambahkan akun Admin, Dosen, atau Mahasiswa.
+                Perbarui data Program Studi.
 
             </p>
 
         </div>
 
         <a
-            href="{{ route('admin.users.index') }}"
+            href="{{ route('admin.program-studi.index') }}"
             class="bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
 
             Kembali
@@ -40,7 +40,7 @@
 
             @foreach($errors->all() as $error)
 
-            <li>{{ $error }}</li>
+                <li>{{ $error }}</li>
 
             @endforeach
 
@@ -53,10 +53,11 @@
     <div class="bg-white rounded-xl shadow">
 
         <form
-            action="{{ route('admin.users.store') }}"
+            action="{{ route('admin.program-studi.update',$programStudi) }}"
             method="POST">
 
             @csrf
+            @method('PUT')
 
             <div class="p-8 space-y-6">
 
@@ -64,119 +65,68 @@
 
                     <label class="block mb-2 font-semibold">
 
-                        Username
-
-                    </label>
-
-                    <input
-
-                        type="text"
-
-                        name="username"
-
-                        value="{{ old('username') }}"
-
-                        class="w-full border rounded-lg px-4 py-3"
-
-                        required>
-
-                </div>
-
-                <div>
-
-                    <label class="block mb-2 font-semibold">
-
-                        Nama Lengkap
-
-                    </label>
-
-                    <input
-
-                        type="text"
-
-                        name="name"
-
-                        value="{{ old('name') }}"
-
-                        class="w-full border rounded-lg px-4 py-3"
-
-                        required>
-
-                </div>
-
-                <div>
-
-                    <label class="block mb-2 font-semibold">
-
-                        Email
-
-                    </label>
-
-                    <input
-
-                        type="email"
-
-                        name="email"
-
-                        value="{{ old('email') }}"
-
-                        class="w-full border rounded-lg px-4 py-3"
-
-                        required>
-
-                </div>
-
-                <div>
-
-                    <label class="block mb-2 font-semibold">
-
-                        Password
-
-                    </label>
-
-                    <input
-
-                        type="password"
-
-                        name="password"
-
-                        class="w-full border rounded-lg px-4 py-3"
-
-                        required>
-
-                </div>
-
-                <div>
-
-                    <label class="block mb-2 font-semibold">
-
-                        Role
+                        Fakultas
 
                     </label>
 
                     <select
-
-                        name="role"
-
+                        name="fakultas_id"
                         class="w-full border rounded-lg px-4 py-3"
-
                         required>
 
-                        <option value="">Pilih Role</option>
+                        @foreach($fakultas as $item)
 
-                        <option value="admin">Admin</option>
+                        <option
+                            value="{{ $item->id }}"
+                            @selected($programStudi->fakultas_id==$item->id)>
 
-                        <option value="dosen">Dosen</option>
+                            {{ $item->nama_fakultas }}
 
-                        <option value="mahasiswa">Mahasiswa</option>
+                        </option>
+
+                        @endforeach
 
                     </select>
+
+                </div>
+
+                <div>
+
+                    <label class="block mb-2 font-semibold">
+
+                        Kode Program Studi
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="kode_prodi"
+                        value="{{ old('kode_prodi',$programStudi->kode_prodi) }}"
+                        class="w-full border rounded-lg px-4 py-3"
+                        required>
+
+                </div>
+
+                <div>
+
+                    <label class="block mb-2 font-semibold">
+
+                        Nama Program Studi
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nama_prodi"
+                        value="{{ old('nama_prodi',$programStudi->nama_prodi) }}"
+                        class="w-full border rounded-lg px-4 py-3"
+                        required>
 
                 </div>
                                 <div class="flex justify-end gap-3 pt-6 border-t">
 
                     <a
-                        href="{{ route('admin.users.index') }}"
+                        href="{{ route('admin.program-studi.index') }}"
                         class="px-6 py-3 rounded-lg bg-gray-300 hover:bg-gray-400 text-gray-800">
 
                         Batal
@@ -187,7 +137,7 @@
                         type="submit"
                         class="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white">
 
-                        Simpan User
+                        Update Program Studi
 
                     </button>
 

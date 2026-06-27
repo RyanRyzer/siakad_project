@@ -36,3 +36,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
 
 });
+
+Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+
+Route::resource('fakultas', \App\Http\Controllers\Admin\FakultasController::class);
+
+Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+
+Route::resource('fakultas', \App\Http\Controllers\Admin\FakultasController::class);
+
+Route::resource('program-studi', \App\Http\Controllers\Admin\ProgramStudiController::class);
