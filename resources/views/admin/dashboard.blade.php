@@ -12,13 +12,14 @@
 
     <p class="text-gray-500 mt-2">
 
-        Selamat datang kembali, <strong>{{ auth()->user()->name }}</strong>.
+        Selamat datang kembali,
+        <span class="font-semibold">{{ auth()->user()->name }}</span>
 
     </p>
 
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
     <div class="bg-white rounded-xl shadow p-6 border-l-4 border-indigo-600">
 
@@ -28,7 +29,7 @@
 
         </p>
 
-        <h2 class="text-4xl font-bold mt-3 text-slate-800">
+        <h2 class="text-4xl font-bold mt-2">
 
             {{ $totalUsers }}
 
@@ -44,7 +45,7 @@
 
         </p>
 
-        <h2 class="text-4xl font-bold mt-3 text-slate-800">
+        <h2 class="text-4xl font-bold mt-2">
 
             {{ $totalDosen }}
 
@@ -60,7 +61,7 @@
 
         </p>
 
-        <h2 class="text-4xl font-bold mt-3 text-slate-800">
+        <h2 class="text-4xl font-bold mt-2">
 
             {{ $totalMahasiswa }}
 
@@ -72,11 +73,11 @@
 
         <p class="text-gray-500">
 
-            Mata Kuliah
+            Total Mata Kuliah
 
         </p>
 
-        <h2 class="text-4xl font-bold mt-3 text-slate-800">
+        <h2 class="text-4xl font-bold mt-2">
 
             {{ $totalMatkul }}
 
@@ -84,63 +85,121 @@
 
     </div>
 
+    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-pink-600">
+
+        <p class="text-gray-500">
+
+            Fakultas
+
+        </p>
+
+        <h2 class="text-4xl font-bold mt-2">
+
+            {{ $totalFakultas }}
+
+        </h2>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-cyan-600">
+
+        <p class="text-gray-500">
+
+            Program Studi
+
+        </p>
+
+        <h2 class="text-4xl font-bold mt-2">
+
+            {{ $totalProdi }}
+
+        </h2>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-red-600">
+
+        <p class="text-gray-500">
+
+            Jadwal
+
+        </p>
+
+        <h2 class="text-4xl font-bold mt-2">
+
+            {{ $totalJadwal }}
+
+        </h2>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-emerald-600">
+
+        <p class="text-gray-500">
+
+            Tahun Akademik
+
+        </p>
+
+        <h2 class="text-4xl font-bold mt-2">
+
+            {{ $totalTahunAkademik }}
+
+        </h2>
+
+    </div>
+
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="grid lg:grid-cols-2 gap-6 mt-8">
 
-    <div class="lg:col-span-2 bg-white rounded-xl shadow">
+    <div class="bg-white rounded-xl shadow">
 
-        <div class="border-b px-6 py-4">
+        <div class="border-b p-5">
 
-            <h2 class="text-xl font-semibold">
+            <h2 class="text-xl font-bold">
 
-                Selamat Datang
+                Informasi Sistem
 
             </h2>
 
         </div>
 
-        <div class="p-6">
+        <div class="p-6 space-y-3">
 
-            <p class="text-gray-600 leading-8">
+            <div class="flex justify-between">
 
-                Sistem Informasi Akademik (SIAKAD) digunakan untuk mengelola seluruh aktivitas akademik kampus seperti data mahasiswa, dosen, program studi, mata kuliah, jadwal perkuliahan, KRS, KHS, hingga pengolahan nilai.
+                <span>Status Sistem</span>
 
-            </p>
+                <span class="font-semibold text-green-600">
 
-            <div class="grid grid-cols-2 gap-4 mt-8">
+                    Online
 
-                <div class="bg-slate-100 rounded-lg p-4">
+                </span>
 
-                    <h4 class="font-semibold">
+            </div>
 
-                        Status Sistem
+            <div class="flex justify-between">
 
-                    </h4>
+                <span>Role Login</span>
 
-                    <p class="text-green-600 mt-2 font-bold">
+                <span class="font-semibold capitalize">
 
-                        Online
+                    {{ auth()->user()->role }}
 
-                    </p>
+                </span>
 
-                </div>
+            </div>
 
-                <div class="bg-slate-100 rounded-lg p-4">
+            <div class="flex justify-between">
 
-                    <h4 class="font-semibold">
+                <span>Versi</span>
 
-                        Role Login
+                <span class="font-semibold">
 
-                    </h4>
+                    SIAKAD 1.0
 
-                    <p class="text-indigo-600 mt-2 font-bold capitalize">
-
-                        {{ auth()->user()->role }}
-
-                    </p>
-
-                </div>
+                </span>
 
             </div>
 
@@ -150,9 +209,9 @@
 
     <div class="bg-white rounded-xl shadow">
 
-        <div class="border-b px-6 py-4">
+        <div class="border-b p-5">
 
-            <h2 class="text-xl font-semibold">
+            <h2 class="text-xl font-bold">
 
                 Menu Cepat
 
@@ -160,37 +219,53 @@
 
         </div>
 
-        <div class="p-6 space-y-3">
+        <div class="p-6 grid grid-cols-2 gap-4">
 
-            <a
-                href="{{ route('admin.users.index') }}"
-                class="block bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-3">
+            <a href="{{ route('admin.users.index') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg p-4 text-center">
 
-                Kelola User
+                User
 
             </a>
 
-            <a
-                href="#"
-                class="block bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-3">
+            <a href="{{ route('admin.dosen.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-4 text-center">
 
-                Kelola Dosen
+                Dosen
 
             </a>
 
-            <a
-                href="#"
-                class="block bg-green-600 hover:bg-green-700 text-white rounded-lg px-4 py-3">
+            <a href="{{ route('admin.mahasiswa.index') }}" class="bg-green-600 hover:bg-green-700 text-white rounded-lg p-4 text-center">
 
-                Kelola Mahasiswa
+                Mahasiswa
 
             </a>
 
-            <a
-                href="#"
-                class="block bg-orange-500 hover:bg-orange-600 text-white rounded-lg px-4 py-3">
+            <a href="{{ route('admin.fakultas.index') }}" class="bg-pink-600 hover:bg-pink-700 text-white rounded-lg p-4 text-center">
+
+                Fakultas
+
+            </a>
+
+            <a href="{{ route('admin.program-studi.index') }}" class="bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg p-4 text-center">
+
+                Program Studi
+
+            </a>
+
+            <a href="{{ route('admin.mata-kuliah.index') }}" class="bg-orange-500 hover:bg-orange-600 text-white rounded-lg p-4 text-center">
 
                 Mata Kuliah
+
+            </a>
+
+            <a href="{{ route('admin.tahun-akademik.index') }}" class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg p-4 text-center">
+
+                Tahun Akademik
+
+            </a>
+
+            <a href="{{ route('admin.jadwal.index') }}" class="bg-red-600 hover:bg-red-700 text-white rounded-lg p-4 text-center">
+
+                Jadwal
 
             </a>
 

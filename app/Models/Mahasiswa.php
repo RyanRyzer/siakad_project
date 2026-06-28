@@ -5,24 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dosen extends Model
+class Mahasiswa extends Model
 {
     use HasFactory;
 
-    protected $table = 'dosen';
+    protected $table = 'mahasiswa';
 
     protected $fillable = [
         'user_id',
         'program_studi_id',
-        'nidn',
+        'dosen_id',
+        'nim',
         'nama',
-        'gelar',
         'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',
         'alamat',
         'email',
         'no_hp',
+        'angkatan',
+        'semester',
         'status'
     ];
 
@@ -34,5 +36,10 @@ class Dosen extends Model
     public function programStudi()
     {
         return $this->belongsTo(ProgramStudi::class);
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class);
     }
 }

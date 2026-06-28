@@ -4,200 +4,128 @@
 
 <div class="max-w-3xl mx-auto">
 
-    <div class="flex items-center justify-between mb-8">
+<div class="bg-white rounded-xl shadow">
 
-        <div>
+<form action="{{ route('admin.users.store') }}" method="POST">
 
-            <h1 class="text-3xl font-bold text-slate-800">
+@csrf
 
-                Tambah User
+<div class="p-8 space-y-6">
 
-            </h1>
+<div>
 
-            <p class="text-gray-500 mt-1">
+<label>Username</label>
 
-                Tambahkan akun Admin, Dosen, atau Mahasiswa.
+<input
+type="text"
+name="username"
+class="w-full border rounded-lg px-4 py-3"
+required>
 
-            </p>
+</div>
 
-        </div>
+<div>
 
-        <a
-            href="{{ route('admin.users.index') }}"
-            class="bg-slate-600 hover:bg-slate-700 text-white px-5 py-3 rounded-lg">
+<label>Nama</label>
 
-            Kembali
+<input
+type="text"
+name="name"
+class="w-full border rounded-lg px-4 py-3"
+required>
 
-        </a>
+</div>
 
-    </div>
+<div>
 
-    @if($errors->any())
+<label>Email</label>
 
-    <div class="bg-red-100 border border-red-300 text-red-700 rounded-lg p-4 mb-6">
+<input
+type="email"
+name="email"
+class="w-full border rounded-lg px-4 py-3"
+required>
 
-        <ul class="list-disc ml-5">
+</div>
 
-            @foreach($errors->all() as $error)
+<div>
 
-            <li>{{ $error }}</li>
+<label>Password</label>
 
-            @endforeach
+<input
+type="password"
+name="password"
+class="w-full border rounded-lg px-4 py-3"
+required>
 
-        </ul>
+</div>
 
-    </div>
+<div>
 
-    @endif
+<label>Konfirmasi Password</label>
 
-    <div class="bg-white rounded-xl shadow">
+<input
+type="password"
+name="password_confirmation"
+class="w-full border rounded-lg px-4 py-3"
+required>
 
-        <form
-            action="{{ route('admin.users.store') }}"
-            method="POST">
+</div>
 
-            @csrf
+<div>
 
-            <div class="p-8 space-y-6">
+<label>Role</label>
 
-                <div>
+<select
+name="role"
+class="w-full border rounded-lg px-4 py-3">
 
-                    <label class="block mb-2 font-semibold">
+<option value="admin">
 
-                        Username
+Admin
 
-                    </label>
+</option>
 
-                    <input
+<option value="dosen">
 
-                        type="text"
+Dosen
 
-                        name="username"
+</option>
 
-                        value="{{ old('username') }}"
+<option value="mahasiswa">
 
-                        class="w-full border rounded-lg px-4 py-3"
+Mahasiswa
 
-                        required>
+</option>
 
-                </div>
+</select>
 
-                <div>
+</div>
 
-                    <label class="block mb-2 font-semibold">
+<div class="flex justify-end gap-3 pt-6">
 
-                        Nama Lengkap
+<a
+href="{{ route('admin.users.index') }}"
+class="px-6 py-3 bg-gray-300 rounded-lg">
 
-                    </label>
+Batal
 
-                    <input
+</a>
 
-                        type="text"
+<button
+class="px-6 py-3 bg-indigo-600 text-white rounded-lg">
 
-                        name="name"
+Simpan User
 
-                        value="{{ old('name') }}"
+</button>
 
-                        class="w-full border rounded-lg px-4 py-3"
+</div>
 
-                        required>
+</div>
 
-                </div>
+</form>
 
-                <div>
-
-                    <label class="block mb-2 font-semibold">
-
-                        Email
-
-                    </label>
-
-                    <input
-
-                        type="email"
-
-                        name="email"
-
-                        value="{{ old('email') }}"
-
-                        class="w-full border rounded-lg px-4 py-3"
-
-                        required>
-
-                </div>
-
-                <div>
-
-                    <label class="block mb-2 font-semibold">
-
-                        Password
-
-                    </label>
-
-                    <input
-
-                        type="password"
-
-                        name="password"
-
-                        class="w-full border rounded-lg px-4 py-3"
-
-                        required>
-
-                </div>
-
-                <div>
-
-                    <label class="block mb-2 font-semibold">
-
-                        Role
-
-                    </label>
-
-                    <select
-
-                        name="role"
-
-                        class="w-full border rounded-lg px-4 py-3"
-
-                        required>
-
-                        <option value="">Pilih Role</option>
-
-                        <option value="admin">Admin</option>
-
-                        <option value="dosen">Dosen</option>
-
-                        <option value="mahasiswa">Mahasiswa</option>
-
-                    </select>
-
-                </div>
-                                <div class="flex justify-end gap-3 pt-6 border-t">
-
-                    <a
-                        href="{{ route('admin.users.index') }}"
-                        class="px-6 py-3 rounded-lg bg-gray-300 hover:bg-gray-400 text-gray-800">
-
-                        Batal
-
-                    </a>
-
-                    <button
-                        type="submit"
-                        class="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white">
-
-                        Simpan User
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </form>
-
-    </div>
+</div>
 
 </div>
 

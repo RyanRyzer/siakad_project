@@ -13,16 +13,16 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-    'username',
-    'name',
-    'email',
-    'password',
-    'role',
+        'username',
+        'name',
+        'email',
+        'password',
+        'role'
     ];
 
     protected $hidden = [
         'password',
-        'remember_token',
+        'remember_token'
     ];
 
     protected function casts(): array
@@ -44,16 +44,16 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role === 'admin';
+        return $this->role == 'admin';
     }
 
     public function isDosen()
     {
-        return $this->role === 'dosen';
+        return $this->role == 'dosen';
     }
 
     public function isMahasiswa()
     {
-        return $this->role === 'mahasiswa';
+        return $this->role == 'mahasiswa';
     }
 }
