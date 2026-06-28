@@ -44,4 +44,9 @@ class Jadwal extends Model
     {
         return $this->hasMany(Nilai::class);
     }
+
+    public function nilai()
+{
+    return $this->hasMany(Nilai::class);
+}
 }

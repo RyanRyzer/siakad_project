@@ -35,4 +35,14 @@ class Dosen extends Model
     {
         return $this->belongsTo(ProgramStudi::class);
     }
+
+    public function mahasiswa()
+{
+    return $this->hasMany(Mahasiswa::class);
+}
+
+public function jadwal()
+{
+    return $this->hasMany(Jadwal::class);
+}
 }

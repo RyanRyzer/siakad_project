@@ -42,4 +42,14 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Dosen::class);
     }
+
+    public function krs()
+{
+    return $this->hasMany(Krs::class);
+}
+
+public function nilai()
+{
+    return $this->hasMany(Nilai::class);
+}
 }

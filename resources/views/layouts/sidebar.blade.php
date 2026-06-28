@@ -97,24 +97,24 @@
             </a>
 
             <a
-                href="#"
-                class="block px-4 py-3 rounded-lg hover:bg-slate-700">
+                href="{{ route('dosen.nilai.index') }}"
+                class="block px-4 py-3 rounded-lg transition {{ request()->routeIs('dosen.nilai.*') ? 'bg-indigo-600' : 'hover:bg-slate-700' }}">
 
                 Jadwal Mengajar
 
             </a>
 
             <a
-                href="#"
-                class="block px-4 py-3 rounded-lg hover:bg-slate-700">
+                href="{{ route('dosen.krs.index') }}"
+                class="block px-4 py-3 rounded-lg transition {{ request()->routeIs('dosen.krs.*') ? 'bg-indigo-600' : 'hover:bg-slate-700' }}">
 
-                Mahasiswa
+                Approval KRS
 
             </a>
 
             <a
-                href="#"
-                class="block px-4 py-3 rounded-lg hover:bg-slate-700">
+                href="{{ route('dosen.nilai.index') }}"
+                class="block px-4 py-3 rounded-lg transition {{ request()->routeIs('dosen.nilai.*') ? 'bg-indigo-600' : 'hover:bg-slate-700' }}">
 
                 Input Nilai
 
@@ -131,32 +131,32 @@
             </a>
 
             <a
-                href="#"
-                class="block px-4 py-3 rounded-lg hover:bg-slate-700">
+                href="{{ route('mahasiswa.krs.index') }}"
+                class="block px-4 py-3 rounded-lg transition {{ request()->routeIs('mahasiswa.krs.*') ? 'bg-indigo-600' : 'hover:bg-slate-700' }}">
 
                 KRS
 
             </a>
 
             <a
-                href="#"
-                class="block px-4 py-3 rounded-lg hover:bg-slate-700">
+                href="{{ route('mahasiswa.khs.index') }}"
+                class="block px-4 py-3 rounded-lg transition {{ request()->routeIs('mahasiswa.khs.*') ? 'bg-indigo-600' : 'hover:bg-slate-700' }}">
 
                 KHS
 
             </a>
 
             <a
-                href="#"
-                class="block px-4 py-3 rounded-lg hover:bg-slate-700">
+                href="{{ route('mahasiswa.krs.index') }}"
+                class="block px-4 py-3 rounded-lg transition {{ request()->routeIs('mahasiswa.jadwal.*') ? 'bg-indigo-600' : 'hover:bg-slate-700' }}">
 
                 Jadwal Kuliah
 
             </a>
 
             <a
-                href="#"
-                class="block px-4 py-3 rounded-lg hover:bg-slate-700">
+                href="{{ route('mahasiswa.khs.index') }}"
+                class="block px-4 py-3 rounded-lg transition {{ request()->routeIs('mahasiswa.transkrip.*') ? 'bg-indigo-600' : 'hover:bg-slate-700' }}">
 
                 Transkrip Nilai
 

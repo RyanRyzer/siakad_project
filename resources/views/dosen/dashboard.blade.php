@@ -2,61 +2,49 @@
 
 @section('content')
 
-<h1 class="text-3xl font-bold mb-6">
+<div class="mb-8">
 
-    Dashboard Dosen
+    <h1 class="text-3xl font-bold">
 
-</h1>
+        Dashboard Dosen
 
-<div class="grid grid-cols-3 gap-6">
+    </h1>
 
-    <div class="bg-white rounded-xl shadow p-6">
+    <p class="text-gray-500">
 
-        <h3 class="text-gray-500">
+        Selamat datang,
 
-            Jadwal Mengajar
+        {{ $dosen->nama }}
 
-        </h3>
+    </p>
 
-        <p class="text-3xl font-bold mt-2">
+</div>
 
-            0
+<div class="grid grid-cols-2 gap-6">
 
-        </p>
+    <div class="bg-white rounded-xl shadow p-8">
 
-    </div>
+        <p class="text-gray-500">
 
-    <div class="bg-white rounded-xl shadow p-6">
-
-        <h3 class="text-gray-500">
-
-            Mahasiswa
-
-        </h3>
-
-        <p class="text-3xl font-bold mt-2">
-
-            0
+            Total Jadwal Mengajar
 
         </p>
 
-    </div>
+        <h2 class="text-5xl font-bold mt-2">
 
-    <div class="bg-white rounded-xl shadow p-6">
+            {{ $totalJadwal }}
 
-        <h3 class="text-gray-500">
-
-            Nilai Belum Diinput
-
-        </h3>
-
-        <p class="text-3xl font-bold mt-2">
-
-            0
-
-        </p>
+        </h2>
 
     </div>
+
+    <a
+        href="#"
+        class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl flex items-center justify-center text-2xl font-bold">
+
+        Input Nilai
+
+    </a>
 
 </div>
 
