@@ -25,4 +25,19 @@ class DetailKrs extends Model
     {
         return $this->belongsTo(Jadwal::class);
     }
+
+    public function nilai()
+    {
+        return Nilai::where(
+            'jadwal_id',
+            $this->jadwal_id
+        )
+
+        ->where(
+            'mahasiswa_id',
+            optional($this->krs)->mahasiswa_id
+        )
+
+        ->first();
+    }
 }

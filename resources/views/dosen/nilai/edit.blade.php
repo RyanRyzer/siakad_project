@@ -2,85 +2,176 @@
 
 @section('content')
 
-<div class="max-w-xl mx-auto">
+<div class="max-w-2xl mx-auto">
 
-<div class="bg-white rounded-xl shadow">
+    <div class="bg-white rounded-xl shadow">
 
-<form
+        <div class="border-b px-8 py-6">
 
-action="{{ route('dosen.nilai.update',[$nilai->jadwal_id,$nilai->mahasiswa_id]) }}"
+            <h1 class="text-3xl font-bold">
 
-method="POST">
+                {{ $nilai->exists ? 'Edit Nilai' : 'Input Nilai' }}
 
-@csrf
+            </h1>
 
-@method('PUT')
+            <p class="text-gray-500 mt-2">
 
-<div class="p-8">
+                {{ $jadwalData->mataKuliah->nama_mk }}
 
-<h1 class="text-3xl font-bold mb-8">
+            </p>
 
-Input Nilai
+            <p class="text-gray-500">
 
-</h1>
+                {{ $mahasiswaData->nim }}
 
-<div>
+                -
 
-<label class="block mb-2 font-semibold">
+                {{ $mahasiswaData->nama }}
 
-Nilai Angka
+            </p>
 
-</label>
+        </div>
 
-<input
+        <form
 
-type="number"
+            action="{{ route('dosen.nilai.update',[$jadwalData->id,$mahasiswaData->id]) }}"
 
-name="nilai_angka"
+            method="POST">
 
-min="0"
+            @csrf
 
-max="100"
+            @method('PUT')
 
-step="0.01"
+            <div class="p-8">
 
-value="{{ old('nilai_angka',$nilai->nilai_angka) }}"
+                <div>
 
-class="w-full border rounded-lg px-4 py-3"
+                    <label class="block font-semibold mb-2">
 
-required>
+                        Nilai Angka
 
-</div>
+                    </label>
 
-<div class="mt-8 flex justify-end gap-3">
+                    <input
 
-<a
+                        type="number"
 
-href="{{ url()->previous() }}"
+                        name="nilai_angka"
 
-class="bg-gray-300 hover:bg-gray-400 px-6 py-3 rounded-lg">
+                        min="0"
 
-Batal
+                        max="100"
 
-</a>
+                        step="0.01"
 
-<button
+                        value="{{ old('nilai_angka',$nilai->nilai_angka) }}"
 
-type="submit"
+                        class="w-full border rounded-lg px-4 py-3"
 
-class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg">
+                        required>
 
-Simpan Nilai
+                    @error('nilai_angka')
 
-</button>
+                    <p class="text-red-500 mt-2">
 
-</div>
+                        {{ $message }}
 
-</div>
+                    </p>
 
-</form>
+                    @enderror
 
-</div>
+                </div>
+                                <div class="mt-8 bg-slate-50 rounded-lg p-5">
+
+                    @php
+
+                        $huruf = '-';
+
+                        $angka = old('nilai_angka', $nilai->nilai_angka);
+
+                        if($angka !== null){
+
+                            if($angka >= 85){
+
+                                $huruf='A';
+
+                            }elseif($angka >= 80){
+
+                                $huruf='AB';
+
+                            }elseif($angka >= 75){
+
+                                $huruf='B';
+
+                            }elseif($angka >= 70){
+
+                                $huruf='BC';
+
+                            }elseif($angka >= 65){
+
+                                $huruf='C';
+
+                            }elseif($angka >= 50){
+
+                                $huruf='D';
+
+                            }else{
+
+                                $huruf='E';
+
+                            }
+
+                        }
+
+                    @endphp
+
+                    <div class="flex justify-between">
+
+                        <span class="font-semibold">
+
+                            Prediksi Nilai Huruf
+
+                        </span>
+
+                        <span class="text-indigo-600 font-bold text-xl">
+
+                            {{ $huruf }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-end gap-3">
+
+                    <a
+
+                        href="{{ route('dosen.nilai.mahasiswa',$jadwalData->id) }}"
+
+                        class="bg-gray-300 hover:bg-gray-400 px-6 py-3 rounded-lg">
+
+                        Kembali
+
+                    </a>
+
+                    <button
+
+                        type="submit"
+
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg">
+
+                        {{ $nilai->exists ? 'Update Nilai' : 'Simpan Nilai' }}
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 

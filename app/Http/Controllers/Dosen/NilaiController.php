@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailKrs;
+use App\Models\Dosen;
 use App\Models\Jadwal;
 use App\Models\Nilai;
 use Illuminate\Http\Request;
@@ -12,13 +14,14 @@ class NilaiController extends Controller
 {
     public function index()
     {
-        $dosen = \App\Models\Dosen::where(
+        $dosen = Dosen::where(
             'user_id',
             Auth::id()
-        )->first();
+        )->firstOrFail();
 
         $jadwal = Jadwal::with([
-            'mataKuliah'
+            'mataKuliah',
+            'tahunAkademik'
         ])
 
         ->where(
@@ -26,21 +29,28 @@ class NilaiController extends Controller
             $dosen->id
         )
 
+        ->orderBy('hari')
+
+        ->orderBy('jam_mulai')
+
         ->get();
 
         return view(
             'dosen.nilai.index',
-            compact('jadwal')
+            compact(
+                'jadwal'
+            )
         );
     }
 
     public function mahasiswa(Jadwal $jadwal)
     {
         $jadwal->load([
-            'mataKuliah'
+            'mataKuliah',
+            'tahunAkademik'
         ]);
 
-        $detail = \App\Models\DetailKrs::with([
+        $detail = DetailKrs::with([
             'krs.mahasiswa'
         ])
 
@@ -51,16 +61,49 @@ class NilaiController extends Controller
 
         ->get();
 
-        return view(
-            'dosen.nilai.mahasiswa',
-            compact(
-                'jadwal',
-                'detail'
+        foreach ($detail as $item) {
+
+            $item->nilai = Nilai::where(
+
+                'jadwal_id',
+                $jadwal->id
+
             )
+
+            ->where(
+
+                'mahasiswa_id',
+                $item->krs->mahasiswa->id
+
+            )
+
+            ->first();
+
+        }
+
+        return view(
+
+            'dosen.nilai.mahasiswa',
+
+            compact(
+
+                'jadwal',
+
+                'detail'
+
+            )
+
         );
     }
-        public function edit($jadwal,$mahasiswa)
+
+    public function edit($jadwal,$mahasiswa)
     {
+        $jadwalData = Jadwal::with(
+            'mataKuliah'
+        )->findOrFail(
+            $jadwal
+        );
+
         $nilai = Nilai::firstOrNew([
 
             'jadwal_id'=>$jadwal,
@@ -68,68 +111,71 @@ class NilaiController extends Controller
             'mahasiswa_id'=>$mahasiswa
 
         ]);
+                $mahasiswaData = \App\Models\Mahasiswa::findOrFail(
+            $mahasiswa
+        );
 
         return view(
             'dosen.nilai.edit',
-            compact('nilai')
+            compact(
+                'nilai',
+                'jadwalData',
+                'mahasiswaData'
+            )
         );
     }
 
-    public function update(Request $request,$jadwal,$mahasiswa)
+    public function update(
+        Request $request,
+        $jadwal,
+        $mahasiswa
+    )
     {
         $request->validate([
 
-            'nilai_angka'=>'required|numeric|min:0|max:100'
+            'nilai_angka' => 'required|numeric|min:0|max:100'
 
         ]);
 
-        $angka = $request->nilai_angka;
+        $angka = (float) $request->nilai_angka;
 
-        if($angka>=85){
+        if ($angka >= 86) {
 
-            $huruf='A';
+            $huruf = 'A';
 
-        }elseif($angka>=80){
+        } elseif ($angka >= 76) {
 
-            $huruf='AB';
+            $huruf = 'B';
 
-        }elseif($angka>=75){
+        } elseif ($angka >= 55) {
 
-            $huruf='B';
+            $huruf = 'C';
 
-        }elseif($angka>=70){
+        } elseif ($angka > 0) {
 
-            $huruf='BC';
+            $huruf = 'D';
 
-        }elseif($angka>=65){
+        } else {
 
-            $huruf='C';
-
-        }elseif($angka>=50){
-
-            $huruf='D';
-
-        }else{
-
-            $huruf='E';
+            $huruf = 'E';
 
         }
 
-        Nilai::updateOrCreate(
+        $nilai = Nilai::updateOrCreate(
 
             [
 
-                'jadwal_id'=>$jadwal,
+                'jadwal_id' => $jadwal,
 
-                'mahasiswa_id'=>$mahasiswa
+                'mahasiswa_id' => $mahasiswa
 
             ],
 
             [
 
-                'nilai_angka'=>$angka,
+                'nilai_angka' => $angka,
 
-                'nilai_huruf'=>$huruf
+                'nilai_huruf' => $huruf
 
             ]
 
@@ -138,13 +184,19 @@ class NilaiController extends Controller
         return redirect()
 
             ->route(
+
                 'dosen.nilai.mahasiswa',
+
                 $jadwal
+
             )
 
             ->with(
+
                 'success',
-                'Nilai berhasil disimpan.'
+
+                'Nilai mahasiswa berhasil disimpan.'
+
             );
     }
 }

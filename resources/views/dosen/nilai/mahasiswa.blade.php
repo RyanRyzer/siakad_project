@@ -12,15 +12,25 @@
 
         </h1>
 
-        <p class="text-gray-500">
+        <p class="text-gray-500 mt-2">
 
-            Daftar mahasiswa yang mengambil mata kuliah.
+            Daftar mahasiswa peserta mata kuliah.
 
         </p>
 
     </div>
 
 </div>
+
+@if(session('success'))
+
+<div class="mb-6 bg-green-100 border border-green-300 text-green-700 rounded-lg px-4 py-3">
+
+    {{ session('success') }}
+
+</div>
+
+@endif
 
 <div class="bg-white rounded-xl shadow overflow-hidden">
 
@@ -38,17 +48,29 @@ NIM
 
 <th class="p-4">
 
-Nama
+Nama Mahasiswa
 
 </th>
 
-<th class="p-4">
+<th class="p-4 text-center">
 
-Status KRS
+Status
 
 </th>
 
-<th class="p-4">
+<th class="p-4 text-center">
+
+Nilai
+
+</th>
+
+<th class="p-4 text-center">
+
+Huruf
+
+</th>
+
+<th class="p-4 text-center">
 
 Aksi
 
@@ -61,6 +83,12 @@ Aksi
 <tbody>
 
 @forelse($detail as $item)
+
+@php
+
+$nilai = $item->nilai;
+
+@endphp
 
 <tr class="border-b">
 
@@ -76,46 +104,108 @@ Aksi
 
 </td>
 
-<td class="p-4">
+<td class="text-center">
+
+<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
 
 {{ $item->krs->status }}
 
-</td>
-
-<td class="p-4">
-
-<a
-
-href="{{ route('dosen.nilai.edit',[$jadwal->id,$item->krs->mahasiswa->id]) }}"
-
-class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
-
-Input Nilai
-
-</a>
+</span>
 
 </td>
 
-</tr>
+<td class="text-center font-semibold">
 
-@empty
-
-<tr>
-
-<td colspan="4" class="text-center py-8">
-
-Belum ada mahasiswa.
+{{ $nilai?->nilai_angka ?? '-' }}
 
 </td>
 
-</tr>
+<td class="text-center font-bold">
 
-@endforelse
+{{ $nilai?->nilai_huruf ?? '-' }}
 
-</tbody>
+</td>
 
-</table>
+<td class="text-center">
+                            @if($nilai)
+
+                            <a
+
+                                href="{{ route('dosen.nilai.edit',[
+                                    $jadwal->id,
+                                    $item->krs->mahasiswa->id
+                                ]) }}"
+
+                                class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+
+                                Edit Nilai
+
+                            </a>
+
+                        @else
+
+                            <a
+
+                                href="{{ route('dosen.nilai.edit',[
+                                    $jadwal->id,
+                                    $item->krs->mahasiswa->id
+                                ]) }}"
+
+                                class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition">
+
+                                Input Nilai
+
+                            </a>
+
+                        @endif
+
+                    </td>
+
+                </tr>
+
+            @empty
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="text-center py-10 text-gray-500">
+
+                        Belum ada mahasiswa yang mengambil mata kuliah ini.
+
+                    </td>
+
+                </tr>
+
+            @endforelse
+
+        </tbody>
+
+        @if($detail->count())
+
+        <tfoot>
+
+            <tr class="bg-slate-50">
+
+                <td colspan="6" class="px-4 py-3 text-sm text-gray-500">
+
+                    Total Mahasiswa :
+
+                    <span class="font-semibold">
+
+                        {{ $detail->count() }}
+
+                    </span>
+
+                </td>
+
+            </tr>
+
+        </tfoot>
+
+        @endif
+
+    </table>
 
 </div>
-
 @endsection
